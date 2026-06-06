@@ -1,6 +1,5 @@
 # Netflix Movies and TV shows Analysis
 
--- Netflix Project
 ![Netflix logo](https://github.com/faisalmandol/Netflix_SQL_Projects/blob/main/Netflix_Logo.png)
 
 drop table if exists netflix;
