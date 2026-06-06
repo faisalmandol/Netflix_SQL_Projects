@@ -1,4 +1,4 @@
-# Netflix_SQL_Projects
+# Netflix Movies and TV shows Analysis
 
 -- Netflix Project
 
