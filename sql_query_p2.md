@@ -1,7 +1,7 @@
 # Netflix Movies and TV shows Analysis
 
 ![Netflix logo](https://github.com/faisalmandol/Netflix_SQL_Projects/blob/main/Netflix_Logo.png)
-```
+```sql
 drop table if exists netflix;
 create table netflix (
        show_id varchar(6),
@@ -16,24 +16,28 @@ create table netflix (
 	   duration varchar(15),
 	   listed_in varchar(100),
 	   description varchar(250)
-);```
+);
+```
 
-``select *
-  from netflix;```
+```sql
+  select *
+  from netflix;
+```
 
+```sql
 select count(*) as total_rows
 from netflix;
-
+```
 ### 14 Business Problems & Solutions
 
 ### 1. Count the number of Movies vs TV Shows
-
+```sql
 select type, count(*)
 from netflix
 group by type;
-
+```
 ### 2. Find the most common rating for movies and TV shows
-
+```sql
 with cte as (
      select type,
 	        rating,
@@ -54,15 +58,15 @@ select type,
        rating as most_frequent_rating
 from cte2
 where rnk = 1;
-
+```
 ### 3. List all movies released in a specific year (e.g., 2020)
-
+```sql
 select * 
 from netflix
 where type = 'Movie' and release_year = 2020;
-
+```
 ### 4. Find the top 5 countries with the most content on Netflix
-
+```sql
 select country, 
        count(*) as most_content
 from netflix
@@ -70,63 +74,64 @@ where country is not null
 group by country
 order by most_content desc
 limit 5;
-
+```
 ### 5. Identify the longest movie
-
+```sql
 select *
 from netflix
 where type = 'Movie' and duration is not null
 order by split_part(duration, ' ', 1)::int desc
 limit 1;
-
+```
 ### 6. Find content added in the last 5 years- 
+```sql
 SELECT *
 FROM netflix
 WHERE TO_DATE(date_added, 'Month DD, YYYY')
       >= CURRENT_DATE - INTERVAL '5 years';
-
+```
 ### 7. Find all the movies/TV shows by director 'Rajiv Chilaka'!
-
+```sql
 select * 
 from netflix
 where director = 'Rajiv Chilaka';
-
+```
 ### 8. List all TV shows with more than 5 seasons
-
+```sql
 select *
 from netflix 
 where type = 'TV Show' 
      and split_part(duration, ' ',1)::int > 5;
-	 
+```	 
 ### 9. Count the number of content items in each genre
-
+```sql
 select listed_in as genre,
        count(*) as content
 from netflix
 group by listed_in;
-
+```
 ## 10. List all movies that are documentaries
-
+```sql
 select *
 from netflix
 where listed_in like '%Documentaries';
-
+```
 ### 11. Find all content without a director
-
+```sql
 select * 
 from netflix
 where director is null;
-
+```
 ### 12. Find how many movies actor 'Salman Khan' appeared in last 10 years!
-
+```sql
 select * 
 from netflix
 where casts like '%Salman Khan' 
      and 
 	 release_year > extract(year from current_date) - 10;
-
+```
 ### 13. Find the top 10 actors who have appeared in the highest number of movies produced in India.
-
+```sql
 select unnest(string_to_array(casts, ',')) as actor,
        count(*)
 from netflix
@@ -134,9 +139,9 @@ where country = 'India'
 group by 1
 order by 2 desc
 limit 10;
- 
+ ```
 ### 14. Categorize the content based on the presence of the keywords 'kill' and 'violence' in the description field. Label content containing these keywords as 'Bad' and all other content as 'Good'. Count how many items fall into each category.
-
+```sql
 SELECT 
     category,
     COUNT(*) AS content_count
@@ -149,6 +154,6 @@ FROM (
     FROM netflix
 ) AS categorized_content
 GROUP BY category;
-
-### End of the project ---------------------------------------------------------------------------------------
+```
+### ---------------------------------- End of the project ---------------------------------------------------------
 
